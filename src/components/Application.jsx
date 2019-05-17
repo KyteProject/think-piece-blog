@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { firestore } from '../firebase';
 
 import Posts from './Posts';
@@ -38,6 +38,10 @@ const Application = () => {
 	const handleCreate = post => {
 		setPosts([post, ...posts]);
 	};
+
+	useEffect(() => {
+		const posts = firestore.collection('posts');
+	}, []);
 
 	return (
 		<main className="Application">

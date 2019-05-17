@@ -7,15 +7,15 @@
 	"author": "Daniel Smith <daniel.smith@ukemi.ninja>",
 	"license": "MIT",
 	"dependencies": {
-		"firebase": "^5.7.0",
-		"firebase-admin": "^6.4.0",
-		"firebase-tools": "^6.1.2",
-		"moment": "^2.22.2",
-		"react": "^16.7.0-alpha.2",
-		"react-dom": "^16.7.0-alpha.2",
-		"react-redux": "^6.0.0",
-		"react-router-dom": "^4.3.1",
-		"react-scripts": "^2.1.5",
+		"firebase": "^6.0.2",
+		"firebase-admin": "^7.3.0",
+		"firebase-tools": "^6.9.2",
+		"moment": "^2.24.0",
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6",
+		"react-redux": "^7.0.3",
+		"react-router-dom": "^5.0.0",
+		"react-scripts": "3.0.1",
 		"redux": "^4.0.1"
 	},
 	"scripts": {
@@ -27,13 +27,21 @@
 	"eslintConfig": {
 		"extends": "react-app"
 	},
-	"browserslist": [
-		">0.2%",
-		"not dead",
-		"not ie <= 11",
-		"not op_mini all"
-	],
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
 	"devDependencies": {
-		"node-sass": "^4.11.0"
+		"node-sass": "^4.11.0",
+		"react-hooks-testing-library": "^0.5.0",
+		"react-test-renderer": "^16.8.6"
 	}
 }
