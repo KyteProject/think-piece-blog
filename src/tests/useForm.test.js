@@ -1,23 +1,28 @@
 import { renderHook, cleanup, act } from 'react-hooks-testing-library';
-import { useForm } from '../components/useForm';
+import { useForm } from './use-form';
+
 const noop = () => {};
+
 jest.useFakeTimers();
+
 describe('useForm tests', () => {
-	// afterEach(cleanup);
-	it('should return empty form state', () => {
+	afterEach(cleanup);
+
+	it('should return empty form props and form state', () => {
 		const { result } = renderHook(() => useForm());
-		const { getFormProps, formState } = result.current;
+		const { getFormProps, formValues } = result.current;
 		expect(getFormProps).toBeDefined();
-		expect(formState.values).toEqual({});
+		expect(formValues).toEqual({});
 	});
-	it('should return an initial formSummary', () => {
+
+	it('should return an initial uiState', () => {
 		const { result } = renderHook(() => useForm());
-		const { getFormProps, formSummary } = result.current;
-		expect(getFormProps).toBeDefined();
-		expect(formSummary).toEqual({
+		const { uiState } = result.current;
+		expect(uiState).toEqual({
 			isSubmitting: false,
 		});
 	});
+
 	it('should support custom form props', () => {
 		const { result } = renderHook(() => useForm());
 		const { getFormProps } = result.current;
@@ -26,7 +31,7 @@ describe('useForm tests', () => {
 	});
 	it('should support custom onSubmit', async () => {
 		const { result } = renderHook(() => useForm());
-		const { getFormProps, formSummary } = result.current;
+		const { getFormProps, uiState } = result.current;
 		const onSubmit = jest.fn();
 		const formProps = getFormProps({ onSubmit });
 		expect(formProps.onSubmit).toBeDefined();
@@ -35,14 +40,15 @@ describe('useForm tests', () => {
 		act(() => {
 			formProps.onSubmit({ preventDefault: noop });
 		});
-		expect(formSummary).toEqual({
+		expect(uiState).toEqual({
 			isSubmitting: false,
 		});
 		expect(onSubmit).toHaveBeenCalledTimes(1);
 	});
+
 	it('should support async onSubmit', async () => {
 		const { waitForNextUpdate, result } = renderHook(() => useForm());
-		const { getFormProps, formSummary } = result.current;
+		const { getFormProps, uiState } = result.current;
 		const onSubmit = evt =>
 			new Promise(r => {
 				setTimeout(() => {
@@ -57,17 +63,18 @@ describe('useForm tests', () => {
 			formProps.onSubmit({ preventDefault: noop });
 		});
 		jest.runAllTimers();
-		expect(result.current.formSummary).toEqual({
+		expect(result.current.uiState).toEqual({
 			isSubmitting: true,
 		});
 		await waitForNextUpdate();
-		expect(formSummary).toEqual({
+		expect(uiState).toEqual({
 			isSubmitting: false,
 		});
 	});
+
 	it('should gracefully handle onSubmit errors', async () => {
 		const { result } = renderHook(() => useForm());
-		const { getFormProps, formSummary } = result.current;
+		const { getFormProps, uiState } = result.current;
 		const onSubmit = evt => new Error();
 		const formProps = getFormProps({ onSubmit });
 		expect(formProps.onSubmit).toBeDefined();
@@ -76,13 +83,14 @@ describe('useForm tests', () => {
 		act(() => {
 			formProps.onSubmit({ preventDefault: noop });
 		});
-		expect(formSummary).toEqual({
+		expect(uiState).toEqual({
 			isSubmitting: false,
 		});
 	});
+
 	it('should gracefully handle async onSubmit errors', async () => {
 		const { waitForNextUpdate, result } = renderHook(() => useForm());
-		const { getFormProps, formSummary } = result.current;
+		const { getFormProps, uiState } = result.current;
 		const onSubmit = evt =>
 			new Promise((resolve, reject) => {
 				setTimeout(() => {
@@ -97,12 +105,33 @@ describe('useForm tests', () => {
 			formProps.onSubmit({ preventDefault: noop });
 		});
 		jest.runAllTimers();
-		expect(result.current.formSummary).toEqual({
+		expect(result.current.uiState).toEqual({
 			isSubmitting: true,
 		});
 		await waitForNextUpdate();
-		expect(formSummary).toEqual({
+		expect(uiState).toEqual({
 			isSubmitting: false,
 		});
+	});
+
+	it('should be able to add inputs', () => {
+		const { result } = renderHook(() => useForm());
+		const { api } = result.current;
+		expect(api).toBeDefined();
+		renderHook(() => api.addInput({ name: 'test', value: '123' }));
+		expect(result.current.formValues).toEqual({ test: '123' });
+		expect(result.current.inputs.test).toBeDefined();
+		let inputProps = result.current.inputs.test.getInputProps();
+		expect(inputProps.id).toEqual('test');
+		expect(inputProps.value).toEqual('123');
+		renderHook(() => api.addInput({ name: 'secondtest', value: '234' }));
+		expect(result.current.formValues).toEqual({
+			test: '123',
+			secondtest: '234',
+		});
+		expect(result.current.inputs.test).toBeDefined();
+		inputProps = result.current.inputs.secondtest.getInputProps();
+		expect(inputProps.id).toEqual('secondtest');
+		expect(inputProps.value).toEqual('234');
 	});
 });
