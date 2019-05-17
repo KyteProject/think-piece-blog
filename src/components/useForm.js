@@ -35,6 +35,7 @@ export const useForm = (name, initialState = {}) => {
 			value,
 			props: { onChange: onInputChange },
 		});
+
 		inputs[name] = input;
 		formValues[name] = value;
 		return input;

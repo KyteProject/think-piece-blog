@@ -1,12 +1,12 @@
 import { renderHook, cleanup, act } from 'react-hooks-testing-library';
-import { useForm } from './use-form';
+import { useForm } from '../components/useForm';
 
 const noop = () => {};
 
 jest.useFakeTimers();
 
 describe('useForm tests', () => {
-	afterEach(cleanup);
+	// afterEach(cleanup);w
 
 	it('should return empty form props and form state', () => {
 		const { result } = renderHook(() => useForm());

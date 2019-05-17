@@ -1,8 +1,8 @@
 import { renderHook, cleanup, act } from 'react-hooks-testing-library';
-import { useInput } from './use-input';
+import { useInput } from '../components/useInput';
 
 describe('useInput tests', () => {
-	afterEach(cleanup);
+	// afterEach(cleanup);
 
 	it('should initialize an input', () => {
 		const { result } = renderHook(() => useInput({ name: 'test', value: '123' }));

@@ -31,7 +31,7 @@ export const useInput = ({ name, value, props = {} }) => {
 		},
 		uiState: {
 			visited,
-			prisitine: inputValue === originalValue,
+			pristine: inputValue === originalValue,
 		},
 		getInputProps,
 	};
