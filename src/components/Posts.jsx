@@ -10,5 +10,4 @@ const Posts = ({ posts, onCreate }) => {
 		</section>
 	);
 };
-
 export default Posts;

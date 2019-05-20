@@ -40,7 +40,17 @@ const Application = () => {
 	};
 
 	useEffect(() => {
-		const posts = firestore.collection('posts');
+		const getPosts = async () => {
+			const snapshot = await firestore.collection('posts').get();
+
+			const posts = snapshot.docs.map(doc => {
+				return { id: doc.id, ...doc.data() };
+			});
+
+			setPosts(posts);
+		};
+
+		getPosts();
 	}, []);
 
 	return (

@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 
-const AddPost = props => {
-	const [title, setTitle] = useState('');
-	const [content, setContent] = useState('');
+class AddPost extends Component {
+	state = { title: '', content: '' };
 
-	const handleChange = () => {
-		//
+	handleChange = event => {
+		const { name, value } = event.target;
+		this.setState({ [name]: value });
 	};
 
-	const handleSubmit = event => {
+	handleSubmit = event => {
 		event.preventDefault();
 
-		const { onCreate } = props;
+		const { onCreate } = this.props;
+		const { title, content } = this.state;
 
 		const post = {
 			id: Date.now().toString(),
@@ -30,17 +31,19 @@ const AddPost = props => {
 
 		onCreate(post);
 
-		setTitle('');
-		setContent('');
+		this.setState({ title: '', content: '' });
 	};
 
-	return (
-		<form onSubmit={handleSubmit} className="AddPost">
-			<input type="text" name="title" placeholder="Title" value={title} onChange={handleChange} />
-			<input type="text" name="content" placeholder="Body" value={content} onChange={handleChange} />
-			<input className="create" type="submit" value="Create Post" />
-		</form>
-	);
-};
+	render() {
+		const { title, content } = this.state;
+		return (
+			<form onSubmit={this.handleSubmit} className="AddPost">
+				<input type="text" name="title" placeholder="Title" value={title} onChange={this.handleChange} />
+				<input type="text" name="content" placeholder="Body" value={content} onChange={this.handleChange} />
+				<input className="create" type="submit" value="Create Post" />
+			</form>
+		);
+	}
+}
 
 export default AddPost;
