@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { firestore, auth } from '../firebase';
 
 const AddPost = () => {
-	const [values, setValues] = useState({ title: '', content: '' });
+	const [values, setValues] = useState({});
 
 	const handleChange = event => {
 		event.persist();
