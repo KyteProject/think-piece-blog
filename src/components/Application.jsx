@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { collectPosts } from '../utils';
-import { firestore } from '../firebase';
+import { firestore, auth } from '../firebase';
 import Posts from './Posts';
+import Authentication from './Authentication';
 
 const Application = () => {
 	const [posts, setPosts] = useState([]);
+	const [user, setUser] = useState(null);
 
-	useEffect(() => {
-		const unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
-			const storedPosts = snapshot.docs.map(collectPosts);
+	useEffect(
+		() => {
+			const unsubscribePosts = firestore
+				.collection('posts')
+				.onSnapshot(snapshot => setPosts(snapshot.docs.map(collectPosts)));
 
-			setPosts(storedPosts);
+			const unsubscribeAuth = auth.onAuthStateChanged(user => setUser(user));
 
 			return () => {
-				unsubscribe();
+				unsubscribePosts();
+				unsubscribeAuth();
 			};
-		});
-	}, []);
+		},
+		[posts, user]
+	);
 
 	return (
 		<main className="Application">
 			<h1>Think Piece</h1>
+			<Authentication user={user} />
 			<Posts posts={posts} />
 		</main>
 	);
