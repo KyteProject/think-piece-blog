@@ -32,16 +32,6 @@ const Application = () => {
 				unsubscribe();
 			};
 		});
-
-		// const getPosts = async () => {
-		// 	const snapshot = await firestore.collection('posts').get();
-
-		// 	const posts = snapshot.docs.map(collectPosts);
-
-		// 	setPosts(posts);
-		// };
-
-		// getPosts();
 	}, []);
 
 	return (
