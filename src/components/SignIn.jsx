@@ -17,13 +17,21 @@ const SignIn = () => {
 	return (
 		<form className="SignIn" onSubmit={handleSubmit}>
 			<h2>Sign In</h2>
-			<input type="email" name="email" placeholder="Email" value={values.email} onChange={handleChange} />
+			<input
+				type="email"
+				name="email"
+				placeholder="Email"
+				value={values.email}
+				onChange={handleChange}
+				autoComplete="current-email"
+			/>
 			<input
 				type="password"
 				name="password"
 				placeholder="Password"
 				value={values.password}
 				onChange={handleChange}
+				autoComplete="current-password"
 			/>
 			<input type="submit" value="Sign In" />
 			<button onClick={signInWithGoogle}>Sign In With Google</button>

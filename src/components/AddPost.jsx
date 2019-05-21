@@ -1,48 +1,45 @@
-import React, { Component } from 'react';
-import { firestore } from '../firebase';
+import React, { useState } from 'react';
+import { firestore, auth } from '../firebase';
 
-class AddPost extends Component {
-	state = { title: '', content: '' };
+const AddPost = () => {
+	const [values, setValues] = useState({ title: '', content: '' });
 
-	handleChange = event => {
-		const { name, value } = event.target;
-		this.setState({ [name]: value });
+	const handleChange = event => {
+		event.persist();
+
+		setValues(values => ({ ...values, [event.target.name]: event.target.value }));
 	};
 
-	handleSubmit = event => {
+	const handleSubmit = event => {
 		event.preventDefault();
 
-		const { title, content } = this.state;
-
-		const post = {
-			title,
-			content,
-			user: {
-				uid: '1111',
-				displayName: 'Steve Kinney',
-				email: 'steve@mailinator.com',
-				photoURL: 'http://placekitten.com/g/200/200',
-			},
-			favorites: 0,
-			comments: 0,
-			createdAt: new Date(),
-		};
+		const { uid, displayName, email, photoURL } = auth.currentUser,
+			post = {
+				title: values.title,
+				content: values.content,
+				user: {
+					uid,
+					displayName,
+					email,
+					photoURL,
+				},
+				favorites: 0,
+				comments: 0,
+				createdAt: new Date(),
+			};
 
 		firestore.collection('posts').add(post);
 
-		this.setState({ title: '', content: '' });
+		setValues({ title: '', content: '' });
 	};
 
-	render() {
-		const { title, content } = this.state;
-		return (
-			<form onSubmit={this.handleSubmit} className="AddPost">
-				<input type="text" name="title" placeholder="Title" value={title} onChange={this.handleChange} />
-				<input type="text" name="content" placeholder="Body" value={content} onChange={this.handleChange} />
-				<input className="create" type="submit" value="Create Post" />
-			</form>
-		);
-	}
-}
+	return (
+		<form onSubmit={handleSubmit} className="AddPost">
+			<input type="text" name="title" placeholder="Title" value={values.title} onChange={handleChange} />
+			<input type="text" name="content" placeholder="Body" value={values.content} onChange={handleChange} />
+			<input className="create" type="submit" value="Create Post" />
+		</form>
+	);
+};
 
 export default AddPost;

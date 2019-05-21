@@ -8,21 +8,18 @@ const Application = () => {
 	const [posts, setPosts] = useState([]);
 	const [user, setUser] = useState(null);
 
-	useEffect(
-		() => {
-			const unsubscribePosts = firestore
-				.collection('posts')
-				.onSnapshot(snapshot => setPosts(snapshot.docs.map(collectPosts)));
+	useEffect(() => {
+		const unsubscribePosts = firestore
+			.collection('posts')
+			.onSnapshot(snapshot => setPosts(snapshot.docs.map(collectPosts)));
 
-			const unsubscribeAuth = auth.onAuthStateChanged(user => setUser(user));
+		const unsubscribeAuth = auth.onAuthStateChanged(user => setUser(user));
 
-			return () => {
-				unsubscribePosts();
-				unsubscribeAuth();
-			};
-		},
-		[posts, user]
-	);
+		return () => {
+			unsubscribePosts();
+			unsubscribeAuth();
+		};
+	}, []);
 
 	return (
 		<main className="Application">
