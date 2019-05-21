@@ -23,15 +23,25 @@ const Application = () => {
 	};
 
 	useEffect(() => {
-		const getPosts = async () => {
-			const snapshot = await firestore.collection('posts').get();
+		const unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
+			const storedPosts = snapshot.docs.map(collectPosts);
 
-			const posts = snapshot.docs.map(collectPosts);
+			setPosts(storedPosts);
 
-			setPosts(posts);
-		};
+			return () => {
+				unsubscribe();
+			};
+		});
 
-		getPosts();
+		// const getPosts = async () => {
+		// 	const snapshot = await firestore.collection('posts').get();
+
+		// 	const posts = snapshot.docs.map(collectPosts);
+
+		// 	setPosts(posts);
+		// };
+
+		// getPosts();
 	}, []);
 
 	return (
