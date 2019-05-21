@@ -6,22 +6,6 @@ import Posts from './Posts';
 const Application = () => {
 	const [posts, setPosts] = useState([]);
 
-	const handleCreate = async post => {
-		const docRef = await firestore.collection('posts').add(post),
-			doc = await docRef.get(),
-			newPost = collectPosts(doc);
-
-		setPosts([newPost, ...posts]);
-	};
-
-	const handleRemove = async id => {
-		// const newPosts = posts.filter(p => p.id !== id);
-
-		await firestore.doc(`posts/${id}`).delete();
-
-		setPosts(posts.filter(p => p.id !== id));
-	};
-
 	useEffect(() => {
 		const unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
 			const storedPosts = snapshot.docs.map(collectPosts);
@@ -37,7 +21,7 @@ const Application = () => {
 	return (
 		<main className="Application">
 			<h1>Think Piece</h1>
-			<Posts posts={posts} onCreate={handleCreate} onRemove={handleRemove} />
+			<Posts posts={posts} />
 		</main>
 	);
 };
