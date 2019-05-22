@@ -13,6 +13,8 @@ const AddPost = () => {
 	const handleSubmit = event => {
 		event.preventDefault();
 
+		if (!auth.currentUser) return console.log('No user');
+
 		const { uid, displayName, email, photoURL } = auth.currentUser,
 			post = {
 				title: values.title,

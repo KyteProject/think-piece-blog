@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from '../firebase';
+import { auth, createUserProfileDocument } from '../firebase';
 
 const SignUp = () => {
 	const [values, setValues] = useState({});
@@ -13,12 +13,12 @@ const SignUp = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 
-		const { email, password, displayName } = values;
+		const { displayName, email, password } = values;
 
 		try {
-			const { user } = await auth.createUserWithEmailAndPassword(email, password);
+			const user = await auth.createUserWithEmailAndPassword(email, password);
 
-			user.updateProfile({ displayName });
+			createUserProfileDocument(user, { displayName });
 		} catch (err) {
 			console.error(err);
 		}
