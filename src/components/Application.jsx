@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { collectPosts } from '../utils';
-import { firestore, auth, createUserProfileDocument } from '../firebase';
+import { firestore, auth, createUserProfileDocument, getUserDocument } from '../firebase';
 import Posts from './Posts';
 import Authentication from './Authentication';
 
 const Application = () => {
-	const [posts, setPosts] = useState([]);
-	const [user, setUser] = useState(null);
+	const [posts, setPosts] = useState([]),
+		[user, setUser] = useState(null);
 
 	useEffect(() => {
 		const unsubscribePosts = firestore

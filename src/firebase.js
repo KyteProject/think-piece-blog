@@ -23,6 +23,8 @@ export const createUserProfileDocument = async (user, additionalData) => {
 			const createdAt = new Date(),
 				{ displayName, email, photoURL } = user;
 
+			console.log(user);
+
 			try {
 				await userRef.set({
 					displayName,
@@ -39,19 +41,19 @@ export const createUserProfileDocument = async (user, additionalData) => {
 		return console.error(err.message);
 	}
 
-	return getUserDocument(user.uid);
+	return getUserDocument(user);
 };
 
-export const getUserDocument = async uid => {
-	if (!uid) return null;
+export const getUserDocument = async user => {
+	if (!user) return null;
+
+	const uid = user.uid;
 
 	try {
-		const userDocument = await firestore
-			.collection('users')
-			.doc(uid)
-			.get();
+		const userRef = firestore.doc(`users/${uid}`),
+			snapshot = await userRef.get();
 
-		return { uid, ...userDocument.data() };
+		return { uid, ...snapshot.data() };
 	} catch (err) {
 		console.error('Error fetching user', err.message);
 	}
