@@ -5,7 +5,7 @@ import SignInAndSignUp from './SignInAndSignUp';
 import { UserContext } from '../providers/UserProvider';
 
 const Authentication = ({ loading }) => {
-	const [user, setUser] = useContext(UserContext);
+	const [user] = useContext(UserContext);
 
 	if (loading) return null;
 

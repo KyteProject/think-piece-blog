@@ -4,7 +4,7 @@ import AddPost from './AddPost';
 import { PostsContext } from '../providers/PostsProvider';
 
 const Posts = () => {
-	const [posts, setPosts] = useContext(PostsContext);
+	const [posts] = useContext(PostsContext);
 
 	return (
 		<section className="Posts">

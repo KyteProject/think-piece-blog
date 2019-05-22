@@ -10,7 +10,7 @@ const UserProvider = props => {
 		const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
 			const user = await createUserProfileDocument(userAuth);
 
-			setUser(user);
+			await setUser(user);
 		});
 
 		return () => {
