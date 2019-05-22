@@ -23,8 +23,6 @@ export const createUserProfileDocument = async (user, additionalData) => {
 			const createdAt = new Date(),
 				{ displayName, email, photoURL } = user;
 
-			console.log(user);
-
 			try {
 				await userRef.set({
 					displayName,

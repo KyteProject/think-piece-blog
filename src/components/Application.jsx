@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collectPosts } from '../utils';
-import { firestore, auth, createUserProfileDocument, getUserDocument } from '../firebase';
+import { firestore, auth, createUserProfileDocument } from '../firebase';
 import Posts from './Posts';
 import Authentication from './Authentication';
 
