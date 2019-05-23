@@ -8,9 +8,16 @@ const UserProvider = props => {
 
 	useEffect(() => {
 		const unsubscribeAuth = auth.onAuthStateChanged(async userAuth => {
-			const user = await createUserProfileDocument(userAuth);
+			const userRef = await createUserProfileDocument(userAuth);
 
-			await setUser(user);
+			if (!userRef) return setUser(null);
+
+			userRef.onSnapshot(snapshot => {
+				return setUser({ uid: snapshot.id, ...snapshot.data() });
+			});
+
+			const snapshot = await userRef.get();
+			setUser({ uid: snapshot.id, ...snapshot.data() });
 		});
 
 		return () => {

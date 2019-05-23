@@ -48,10 +48,7 @@ export const getUserDocument = async user => {
 	const uid = user.uid;
 
 	try {
-		const userRef = firestore.doc(`users/${uid}`),
-			snapshot = await userRef.get();
-
-		return { uid, ...snapshot.data() };
+		return firestore.doc(`users/${uid}`);
 	} catch (err) {
 		console.error('Error fetching user', err.message);
 	}

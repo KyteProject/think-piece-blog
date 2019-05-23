@@ -10,7 +10,7 @@ const belongsToCurrentUser = (user, postAuthor) => {
 };
 
 const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
-	const [currentUser, setUser] = useContext(UserContext);
+	const [currentUser] = useContext(UserContext);
 
 	const postRef = firestore.doc(`posts/${id}`),
 		remove = () => postRef.delete(),
