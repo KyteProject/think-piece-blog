@@ -12,7 +12,7 @@ const UserProfile = () => {
 	const handleChange = ( event ) => {
 		event.persist();
 
-		setValues( ( values ) => ( { ...values, [ event.target.name ]: event.target.value } ) );
+		setValues( () => ( { ...values, [ event.target.name ]: event.target.value } ) );
 	};
 
 	const handleSubmit = ( event ) => {
@@ -34,7 +34,8 @@ const UserProfile = () => {
 				.child( file.name )
 				.put( file )
 				.then( ( res ) => res.ref.getDownloadURL() )
-				.then( ( photoURL ) => userRef.update( { photoURL } ) );
+				.then( ( photoURL ) => userRef.update( { photoURL } ) )
+				.catch( ( err ) => console.error( err ) );
 		}
 	};
 

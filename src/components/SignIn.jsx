@@ -6,7 +6,7 @@ const SignIn = () => {
 
 	const handleChange = ( event ) => {
 		event.persist();
-		setValues( ( values ) => ( { ...values, [ event.target.name ]: event.target.value } ) );
+		setValues( () => ( { ...values, [ event.target.name ]: event.target.value } ) );
 	};
 
 	const handleSubmit = ( event ) => {

@@ -14,6 +14,20 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => auth.signInWithPopup( provider );
 export const signOut = () => auth.signOut();
 
+export const getUserDocument = async( user ) => {
+	if ( !user ) {
+		return null;
+	}
+
+	const uid = user.uid;
+
+	try {
+		return firestore.doc( `users/${uid}` );
+	} catch ( err ) {
+		console.error( 'Error fetching user', err.message );
+	}
+};
+
 export const createUserProfileDocument = async( user, additionalData ) => {
 	if ( !user ) {
 		return;
@@ -44,20 +58,6 @@ export const createUserProfileDocument = async( user, additionalData ) => {
 	}
 
 	return getUserDocument( user );
-};
-
-export const getUserDocument = async( user ) => {
-	if ( !user ) {
-		return null;
-	}
-
-	const uid = user.uid;
-
-	try {
-		return firestore.doc( `users/${uid}` );
-	} catch ( err ) {
-		console.error( 'Error fetching user', err.message );
-	}
 };
 
 window.firebase = firebase;
