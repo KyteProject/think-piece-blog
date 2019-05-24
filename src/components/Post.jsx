@@ -3,18 +3,20 @@ import moment from 'moment';
 import { firestore } from '../firebase';
 import { UserContext } from '../providers/UserProvider';
 
-const belongsToCurrentUser = (user, postAuthor) => {
-	if (!user) return false;
+const belongsToCurrentUser = ( user, postAuthor ) => {
+	if ( !user ) {
+		return false;
+	}
 
 	return user.uid === postAuthor.uid;
 };
 
-const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
-	const [currentUser] = useContext(UserContext);
+const Post = ( { id, title, content, user, createdAt, stars, comments } ) => {
+	const [ currentUser ] = useContext( UserContext );
 
-	const postRef = firestore.doc(`posts/${id}`),
+	const postRef = firestore.doc( `posts/${id}` ),
 		remove = () => postRef.delete(),
-		star = () => postRef.update({ stars: stars + 1 });
+		star = () => postRef.update( { stars: stars + 1 } );
 
 	return (
 		<article className="Post">
@@ -37,13 +39,13 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
 						{comments}
 					</p>
 					<p>Posted by {user.displayName}</p>
-					<p>{moment(createdAt.toDate()).calendar()}</p>
+					<p>{moment( createdAt.toDate() ).calendar()}</p>
 				</div>
 				<div>
 					<button className="star" onClick={star}>
 						Star
 					</button>
-					{belongsToCurrentUser(currentUser, user) && (
+					{belongsToCurrentUser( currentUser, user ) && (
 						<button className="delete" onClick={remove}>
 							Delete
 						</button>
@@ -62,11 +64,11 @@ Post.defaultProps = {
 		id: '123',
 		displayName: 'Bill Murray',
 		email: 'billmurray@mailinator.com',
-		photoURL: 'https://www.fillmurray.com/300/300',
+		photoURL: 'https://www.fillmurray.com/300/300'
 	},
 	createdAt: new Date(),
 	stars: 0,
-	comments: 0,
+	comments: 0
 };
 
 export default Post;

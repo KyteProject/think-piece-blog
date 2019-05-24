@@ -1,3 +1,3 @@
-export const collectPosts = doc => {
+export const collectPosts = ( doc ) => {
 	return { id: doc.id, ...doc.data() };
 };

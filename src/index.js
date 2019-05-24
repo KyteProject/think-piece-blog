@@ -14,5 +14,5 @@ render(
 			</PostsProvider>
 		</UserProvider>
 	</Router>,
-	document.getElementById('root')
+	document.getElementById( 'root' )
 );

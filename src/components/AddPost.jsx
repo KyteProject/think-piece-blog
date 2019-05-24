@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { firestore, auth } from '../firebase';
 
 const AddPost = () => {
-	const [values, setValues] = useState({});
+	const [ values, setValues ] = useState( {} );
 
-	const handleChange = event => {
+	const handleChange = ( event ) => {
 		event.persist();
 
-		setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+		setValues( ( values ) => ( { ...values, [ event.target.name ]: event.target.value } ) );
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = ( event ) => {
 		event.preventDefault();
 
-		if (!auth.currentUser) return console.log('No user');
+		if ( !auth.currentUser ) {
+			return console.log( 'No user' );
+		}
 
 		const { uid, displayName, email, photoURL } = auth.currentUser,
 			post = {
@@ -23,16 +25,16 @@ const AddPost = () => {
 					uid,
 					displayName,
 					email,
-					photoURL,
+					photoURL
 				},
 				favorites: 0,
 				comments: 0,
-				createdAt: new Date(),
+				createdAt: new Date()
 			};
 
-		firestore.collection('posts').add(post);
+		firestore.collection( 'posts' ).add( post );
 
-		setValues({ title: '', content: '' });
+		setValues( { title: '', content: '' } );
 	};
 
 	return (

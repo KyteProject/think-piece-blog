@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { signInWithGoogle } from '../firebase';
 
 const SignIn = () => {
-	const [values, setValues] = useState({});
+	const [ values, setValues ] = useState( {} );
 
-	const handleChange = event => {
+	const handleChange = ( event ) => {
 		event.persist();
-		setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+		setValues( ( values ) => ( { ...values, [ event.target.name ]: event.target.value } ) );
 	};
 
-	const handleSubmit = event => {
+	const handleSubmit = ( event ) => {
 		event.preventDefault();
-		setValues({ email: '', password: '' });
+		setValues( { email: '', password: '' } );
 	};
 
 	return (
