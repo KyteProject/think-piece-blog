@@ -2,6 +2,7 @@
 firebase-config.js
 
 # dependencies
+/functions/node_modules
 /node_modules
 /.pnp
 .pnp.js
@@ -11,8 +12,10 @@ firebase-config.js
 
 # production
 /build
+.firebase
 
 # misc
+.VSCODE
 .DS_Store
 .env.local
 .env.development.local
