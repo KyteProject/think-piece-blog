@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import Post from './Post';
 import Comments from './Comments';
 import { firestore } from '../firebase';
 import { collectPosts } from './../utils';
+import { UserContext } from '../providers/UserProvider';
 
 const PostPage = ( props ) => {
 	const [ post, setPost ] = useState( null ),
 		[ comments, setComments ] = useState( [] ),
+		[ user ] = useContext( UserContext ),
 		postId = props.match.params.id,
 		postRef = firestore.doc( `posts/${postId}` ),
 		commentsRef = postRef.collection( 'comments' );
@@ -22,7 +24,7 @@ const PostPage = ( props ) => {
 		const unsubscribeComments = commentsRef.onSnapshot( ( snapshot ) => {
 			const fetchedComments = snapshot.docs.map( collectPosts );
 
-			setComments( { fetchedComments } );
+			setComments( fetchedComments );
 		} );
 
 		return () => {
@@ -31,10 +33,17 @@ const PostPage = ( props ) => {
 		};
 	}, [] );
 
+	const createComment = ( comment ) => {
+		commentsRef.add( {
+			...comment,
+			user
+		} );
+	};
+
 	return (
 		<section>
 			{post && <Post {...post} />}
-			{post && <Comments comments={comments} postId={post.id} onCreate="" />}
+			{post && <Comments comments={comments} postId={post.id} onCreate={createComment} />}
 		</section>
 	);
 };

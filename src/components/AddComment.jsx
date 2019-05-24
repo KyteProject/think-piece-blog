@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const AddComment = () => {
+const AddComment = ( props ) => {
 	const [ values, setValues ] = useState( {} );
 
 	const handleChange = ( event ) => {
@@ -12,7 +12,7 @@ const AddComment = () => {
 	const handleSubmit = ( event ) => {
 		event.preventDefault();
 
-		setValues( '' );
+		props.onCreate( values );
 	};
 
 	return (
