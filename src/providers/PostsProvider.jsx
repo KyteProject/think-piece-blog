@@ -2,22 +2,22 @@ import React, { useState, useEffect, createContext } from 'react';
 import { collectPosts } from '../utils';
 import { firestore } from '../firebase';
 
-const PostsContext = createContext([{}, () => {}]);
+const PostsContext = createContext( [ {}, () => {} ] );
 
-const PostsProvider = props => {
-	const [posts, setPosts] = useState([]);
+const PostsProvider = ( props ) => {
+	const [ posts, setPosts ] = useState( [] );
 
-	useEffect(() => {
+	useEffect( () => {
 		const unsubscribePosts = firestore
-			.collection('posts')
-			.onSnapshot(snapshot => setPosts(snapshot.docs.map(collectPosts)));
+			.collection( 'posts' )
+			.onSnapshot( ( snapshot ) => setPosts( snapshot.docs.map( collectPosts ) ) );
 
 		return () => {
 			unsubscribePosts();
 		};
-	}, []);
+	}, [] );
 
-	return <PostsContext.Provider value={[posts, setPosts]}>{props.children}</PostsContext.Provider>;
+	return <PostsContext.Provider value={[ posts, setPosts ]}>{props.children}</PostsContext.Provider>;
 };
 
 export { PostsContext, PostsProvider };
