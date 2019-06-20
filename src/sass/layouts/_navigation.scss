@@ -1,0 +1,106 @@
+/* Navbar */
+
+.menu {
+	margin-bottom: 25px;
+	.navbar {
+		@include add-border(1px, $border-color, top-bottom);
+		margin-bottom: 0;
+		.navbar-toggle {
+			.icon-bar {
+				background: $highlighted-color;
+			}
+			&.collapsed {
+				.icon-bar {
+					background: $base-font-color;
+				}
+			}
+		}
+		.nav {
+			float: none;
+			margin: 0 auto;
+			width: 100%;
+			li {
+				display: inline-block;
+				float: none;
+				&.dropdown {
+					> a:after {
+						display: inline-block;
+						content: "\f107";
+						margin-left: 5px;
+						font-family: "FontAwesome";
+						font-size: 11px;
+						line-height: 0.9;
+						color: $base-font-color;
+						-webkit-font-smoothing: antialiased;
+						-moz-osx-font-smoothing: grayscale;
+					}
+					.dropdown {
+						> a:after {
+							content: "\f105";
+							float: right;
+							line-height: 1.8;
+						}
+					}
+					&.open {
+						> a {
+							&:focus,
+							&:active {
+								background-color: transparent !important;
+							}
+							&:after {
+								color: $highlighted-color;
+							}
+							background-color: transparent !important;
+							color: $highlighted-color;
+						}
+						a:hover:after {
+							color: $highlighted-color;
+						}
+					}
+					.dropdown-menu {
+						border-radius: 0;
+						@include transition(0.25s);
+						.dropdown-menu {
+							top: -8px;
+							left: 100%;
+							z-index: 1000;
+							border-radius: 0;
+						}
+						li {
+							&:last-child {
+								a {
+									border: none;
+								}
+							}
+							a {
+								border-bottom: 1px solid #eee;
+								margin: 0;
+								text-decoration: none;
+								text-transform: uppercase;
+								padding: 9px 18px;
+								line-height: 1.8;
+								width: 220px;
+							}
+						}
+					}
+				}
+				a {
+					display: block;
+					font-size: 11px;
+					letter-spacing: 1px;
+					&:hover,
+					&:focus {
+						background: transparent !important;
+						color: $highlighted-color;
+					}
+				}
+				&.active {
+					a {
+						background: transparent;
+						color: $highlighted-color;
+					}
+				}
+			}
+		}
+	}
+}

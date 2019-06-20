@@ -1,3 +1,12 @@
+@import 'sass/base/_variables';
+@import 'sass/base/_mixins';
+@import 'sass/base/_base';
+
+@import 'sass/layouts/_header';
+@import 'sass/layouts/_navigation';
+
+@import 'sass/layouts/_responsive';
+
 $input-color: #7dbbc3;
 $button-color: #f4b9b2;
 $info-color: #daedbd;
@@ -71,11 +80,6 @@ input[type='submit'],
 input[type="file"] {
 	margin: 1em 0;
 	padding: 1em 0;
-}
-
-.Application {
-	max-width: 600px;
-	margin: auto;
 }
 
 %authentication {
