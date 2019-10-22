@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/think-piece-blog/static/css/main.85cc7bef.chunk.css",
+    "main.js": "/think-piece-blog/static/js/main.b3c5a38e.chunk.js",
+    "main.js.map": "/think-piece-blog/static/js/main.b3c5a38e.chunk.js.map",
+    "runtime~main.js": "/think-piece-blog/static/js/runtime~main.b06fd2b9.js",
+    "runtime~main.js.map": "/think-piece-blog/static/js/runtime~main.b06fd2b9.js.map",
+    "static/js/2.c37d4440.chunk.js": "/think-piece-blog/static/js/2.c37d4440.chunk.js",
+    "static/js/2.c37d4440.chunk.js.map": "/think-piece-blog/static/js/2.c37d4440.chunk.js.map",
+    "index.html": "/think-piece-blog/index.html",
+    "precache-manifest.c1bf6abd8baf369a211e3dbeab4fe986.js": "/think-piece-blog/precache-manifest.c1bf6abd8baf369a211e3dbeab4fe986.js",
+    "service-worker.js": "/think-piece-blog/service-worker.js",
+    "static/css/main.85cc7bef.chunk.css.map": "/think-piece-blog/static/css/main.85cc7bef.chunk.css.map"
+  }
+}
